@@ -1,0 +1,35 @@
+import { useEffect } from "react";
+import { useState } from "react";
+import Cat from "../cat/Cat";
+const App = () => {
+  const [breeds, setBreeds] = useState([]);
+  const [online, SetOnline] = useState(false);
+  const handleClick = (e) => {
+    SetOnline(true);
+    setSearch(r.target.value);
+  };
+  useEffect(() => {
+    if (search) {
+      try {
+        fetch(
+          `https://api.thecatapi.com/v1/images/search?breed_ids=${search}`)
+          .then(response => response.json()
+          .then(data => setCats(data)));
+      } catch (msg) {
+        console.log(msg);
+      }
+    }
+  }, [search]);
+  console.log(online);
+  console.log(breeds);
+  return (
+    <>
+      <Search onSearch={handleSearch}></Search>
+      {cats?.map((cat) => (
+        <Cat key={cat.id} url={cat.url} />
+      ))}
+    </>
+  );
+};
+
+export default App;
